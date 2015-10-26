@@ -1,0 +1,55 @@
+
+<div class="options">
+	<div class="container">
+		<button type="button" class="btn btn-default home-button btn-sm" id="toggle-query-button">
+			Query events
+		</button>
+		<button type="button" class="btn btn-default home-button btn-sm" id="new-event-button">
+			New event
+		</button>
+		
+		<div id="query-form" method="post">
+			<ul class="event-query">
+				<li><div class="input-description">Event name</div><input placeholder="event name"></li>
+				<li><div class="input-description">Event location</div><input placeholder="event location"></li>
+				<li><div class="input-description">Begin time</div><input placeholder="begin time" class="datepicker" id="datepicker"></li>
+				<li><div class="input-description">End time</div><input placeholder="end time" class="datepicker"></li>
+			</ul>
+			<button class="btn btn-default home-button btn-sm">Search <span class="glyphicon glyphicon-search" aria-hidden="true" style="padding-left: 4px;"></span></button>
+		</div>
+	</div> <!-- container -->
+</div> <!-- search -->
+
+<!-- event list -->
+<div class="events">
+	<div class="container">
+		<div class="dynamic-content">
+			<div class="text-center"><h3>Loading...</h3></div>
+		</div>
+		
+	</div> <!-- container -->
+</div> <!-- events -->
+
+
+
+<div class="arrows">
+	<div class="container">
+		<div class="text-center find-events">
+			<a href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="padding-right:2px;"></span>previous</a>
+			<a href="#">next<span class="glyphicon glyphicon-chevron-right" aria-hidden="true" style="padding-left:2px;"></span></a>
+		</div>
+	</div>
+</div>
+
+
+
+<script>
+	$(document).ready(function(){
+		$(function() {
+			$( ".datepicker" ).datepicker();
+		});
+		$("#toggle-query-button").click(function(){
+			$("#query-form").slideToggle(200);
+		});
+	});
+</script>

@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="event_details_style.css">
+
+<div class="container title-container">
+	<h2>Edit event</h2>
+</div>
+
+<div class="event-details">
+	<div class="container">
+		<ul class="details-input">
+			<li><div class="input-description">Event name</div><input  type="text" name="name" id="name-input"></li>
+			<li><div class="input-description">Event location</div><input  type="text" name="location" id="location-input"></li>
+			<li><div class="input-description">Begin time</div><input  type="text" name="begin" id="begin-input"></li>
+			<li><div class="input-description">End time</div><input  type="text" name="end" id="end-input"></li>
+			<li><div class="input-description">Event description</div><textarea></textarea></li>
+		</ul>
+		<button class="btn btn-default home-button" style="margin-right: 50px;">Save changes</button>
+		<button class="btn btn-danger home-button" style="margin-right: 50px;">Delete event</button>
+		<button class="btn btn-default home-button" style="margin-right: 50px;" id="cancel-button">Cancel</button>
+	</div> <!-- container -->
+</div> <!-- event-details -->
+
+<script>
+	$(document).ready(function(){
+		$('#cancel-button').click(function(){
+			calendarBegin();
+		});
+	});
+</script>

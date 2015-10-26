@@ -1,0 +1,91 @@
+
+/*
+body { 
+	padding-top: 65px; 
+}
+*/
+
+#query-form {
+	display: none;
+}
+
+
+ul.event-query {
+	 list-style-type: none;
+	 padding: 0;
+	 margin-top: 10px;
+}
+
+	ul.event-query>li>.input-description{
+		width: 100px;
+		float:left;
+		margin-top: 3px;
+	}
+
+ul.event-list {
+	list-style-type: none;
+	padding-left: 40px;
+	margin-left: 0px;
+	margin-top: 20px;
+	margin-bottom: 40px;
+}
+
+	li.event{
+		clear: both;
+		padding-bottom: 10px;
+		padding-top: 10px;
+	}
+
+
+		li.event > a {
+			float:left;
+			color: #303030;
+		}
+
+			li.event > a:hover {
+				color: #337ab7;
+			}
+
+			li.event > a > * {
+				float:left;
+				font-size:120%;
+			}
+			
+			
+			li.event > a > .time {
+				font-weight: bold;
+			}
+
+		li.event .time{
+			padding-right: 15px;
+			width: 120px;
+		}
+
+	.day-divider {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+
+		.day-divider .day-label{
+			height: 1px; 
+			background-color: #D0D0D0; 
+			text-align: center;
+		}
+
+			.day-divider .day-label .text-container {
+				background-color: white; 
+				position: relative; 
+				top: -0.5em; 
+				padding-left: 8px;
+				padding-right: 8px;
+				font-size: 110%;
+			}
+
+.find-events {
+	padding-bottom: 50px;
+}
+
+	.find-events > a {
+		margin-left: 15px;
+		margin-right: 15px;
+	}

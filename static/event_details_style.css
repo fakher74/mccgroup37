@@ -1,0 +1,26 @@
+
+/*
+body { 
+	padding-top: 65px; 
+}
+*/
+
+h2 {
+	margin-top: 0px;
+	font-size: 180%;
+}
+
+
+ul.details-input {
+	 list-style-type: none;
+	 padding: 0;
+	 margin-top: 10px;
+	 margin-bottom: 40px;
+	 padding-left:20px;
+}
+
+	ul.details-input>li>.input-description{
+		width: 100px;
+		float:left;
+		margin-top: 3px;
+	}

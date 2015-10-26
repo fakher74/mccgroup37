@@ -1,0 +1,118 @@
+MCC Assignment Phase 1
+Group 37
+johannes.rauhamaa@aalto.fi
+fakher.atout@aalto.fi
+=====================================
+
+This tar file ball includes
+app/
+routes.js		: defines the REST api 
+models/
+models.js		: the data models 
+config/
+database.js		: database configuration file
+passport.js		: passport.js module configuration file. Contains 
+				  functions that handle logging in and signing up
+node_modules/	: directory, which contains all of the imported packages
+package.json	: contains list of imported packages.
+server.js		: configuration file
+views/
+login.ejs		: login view
+signup.ejs		: signup view
+README
+
+  NOTE: The architecture of the application and many of the files used in it are for the large part based on these pieces of tutorial code, with little modifications:
+	- https://github.com/scotch-io/node-api
+	- https://github.com/scotch-io/easy-node-authentication/tree/local
+
+=====================================
+How to install and configure:
+
+Perform the following steps
+
+1) Extract the compressed file
+
+2) Install node.js
+sudo apt-get update
+sudo apt-get install nodejs
+
+3) Install mongodb
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+
+=====================================
+How to run:
+cd exercise1_final
+node server.js
+
+=====================================
+How to use:
+
+1. Sign in/sign up
+  a. Using internet browser go this url http://localhost:8080/.
+  b. Enter your account's username/password pair if you have already created one.
+  c. If you do not have an account, click on signup and create an account.
+
+  NOTE: Following steps assume you have signed in and your session remains active. The REST API functions can only be used when you are logged in.
+
+2. List all your calendar's events
+  Send an HTTP GET request to http://localhost:8080
+  On success you should get the details of all your events as a result.
+
+3. List one event by its id (e.g. id = 3fb45fc5eda6cdd6b7d)
+  Send an HTTP GET request to http://localhost:8080/5616a3fb45fc5eda6cdd6b7d
+  On success you should get the event details as a result.
+
+4. Add an event to your calendar
+  Send an HTTP POST request to http://localhost:8080 with following header fields:
+	- name:			The event name (required)
+	- begin:		The date and time when event starts (required)
+	- end:			The date and time when event ends (required)
+	- location:		The location of the event
+	- description:	Short description of event
+  On success you should get as a response {message: “Event created”}
+
+  NOTE: the begin and end time must be given in JavaScript date string format: http://www.w3schools.com/js/js_date_formats.asp
+
+5. Delete an event using its id (e.g. id = 3fb45fc5eda6cdd6b7d)
+  Send an HTTP DELETE request to http://localhost:8080/3fb45fc5eda6cdd6b7d
+  On success you should get as a response {message: “event removed”}
+
+6. Update an Event using its id (e.g. id = 3fb45fc5eda6cdd6b7d)
+  Send an HTTP DELETE request to http://localhost:8080/3fb45fc5eda6cdd6b7d with following header fields:
+	- name:			The event name (required)
+	- begin:		The date and time when event starts (required)
+	- end:			The date and time when event ends (required)
+	- location:		The location of the event
+	- description:	Short description of event
+  Include only the fields you want to update.
+  On success you should get as a response {message: “event updated”}
+
+7. Search an event
+  Send and HTTP GET request to http://localhost:8080 with query parameters defined in the URL string, e.g. http://localhost:8080?name=event_name&begin=2015-10-01&end=2015-10-02&location=Helsinki
+  Include only the query parameters you want to use. It is possible to query events based on their name, location and time. Parameter “end” specifies the time before which the result events occur and “begin” the time after which the result events occur.
+  On success you should get the details of the events that match the query as a result.
+
+=====================================
+Virtual machine setup
+
+-Updating security group
+  neutron security-group-rule-list default
+  neutron security-group-rule-delete <>
+  nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
+  nova secgroup-add-rule default tcp 8080 8080   0.0.0.0/0
+
+-Creating instance
+  nova boot --flavor m1.mini --image Ubuntu-14.04.1_LTS_server_AMD_64_20150123 --nic net-id=d01eefb1-cbff-4270-9211-982d64a55840 --security-group default --key-name echo-key mcc37
+
+-Associating IP
+  nova floating-ip-associate mcc37 130.233.42.191
+
+-Transfer file to instance
+  scp exercise1_final_v2.tar.gz  ubuntu@130.233.42.191
+
+-You can access server using 130.233.42.191:8080
+-If you are outside university network you need to config proxy by creating a tunnel and configure your Internet browser proxy:
+  ssh -N -D 1080 mccgroup37@echo.niksula.hut.fi 
