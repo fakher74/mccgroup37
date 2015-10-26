@@ -135,15 +135,6 @@ function calendarBegin() {
 	var calendar = new calendarUtil();
 	calendar.buildCalendar();
 	
-}
-
-
-
-
-$(document).ready(function(){
-	
-	
-	calendarBegin();
 	
 	$(document).on('click', "#new-event-button", function(event) {
 		buildCreateEventPage();
@@ -152,8 +143,15 @@ $(document).ready(function(){
 	$(document).on('click', ".event-link", function(event) {
 		var eventpage = new editEventUtil();
 		eventpage.buildEditEventPage();
-		
-		
 	});
+	
+}
+
+
+
+
+$(document).ready(function(){
+	
+	calendarBegin();
 	
 });
