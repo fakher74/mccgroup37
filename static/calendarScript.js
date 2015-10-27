@@ -1,4 +1,4 @@
-
+//TODO: for some reason when pressing cancel button, renderCalendar gets called several times. This shoudl be fixed
 
 // return dd.mm.yyyy string from the database format datetime string
 function getDate(datestring) {
@@ -94,6 +94,35 @@ function calendarUtil()
 		
 	}
 	
+	function searchEvents() {
+		
+		var name     = document.getElementById('name-input').value;
+		var location = document.getElementById('location-input').value;
+		var begin    = document.getElementById('begin-input').value;
+		var end      = document.getElementById('end-input').value;
+		
+		var queryString = "";
+		if (name.length)
+			queryString += "name="+name;
+		if (location.length)
+			queryString += "&location="+location;
+		if (begin.length)
+			queryString += "&begin="+begin;
+		if (end.length)
+			queryString += "&end="+end;
+		
+		$.get("/?"+queryString, function(data, status){
+			
+			if(status=="success"){	
+				alert(data.length);
+			}else{
+				//TODO
+			}
+		});
+		
+		
+	}
+	
 	// builds the calendar page
 	// TODO: print out the events in chronological order
 	this.buildCalendar = function() {
@@ -101,21 +130,31 @@ function calendarUtil()
 		// load the calendar template
 		$('.page-content').load("calendar_template.html");
 		
-		// retrieve the event information
-		$.get("/", function(data, status){
+		if(0) { // if(events.length)
+			renderCalendar();
+		} else {
+			// retrieve the event information
+			$.get("/", function(data, status){
+				
+				if(status=="success"){
+					
+					events = data;
+					
+					sortEvents();
+					
+					renderCalendar();
+					
+					
+				} else {
+					// TODO: do something useful
+				}
+			});
+		}
+		
+		$(document).on('click', "#search-button", function() {
 			
-			if(status=="success"){
-				
-				events = data;
-				
-				sortEvents();
-				
-				renderCalendar();
-				
-				
-			} else {
-				// TODO: do something useful
-			}
+			searchEvents();
+			
 		});
 	}
 	
@@ -123,54 +162,156 @@ function calendarUtil()
 }
 
 
-function editEventUtil() {
+function editEventUtil(cal, eventid) {
 	
-	this.id = "";
+	var id = eventid;
 	
+	var name        = "";
+	var location    = "";
+	var begin       = "";
+	var end         = "";
+	var description = "";
 	
-	// This is a useless function
-	this.getEventDetails = function(id) {
-		$.get("/"+id, function(data, status){
-			if(status=="success"){
-				return data;
-			} else {
-				// TODO: do something useful
+	orig_calendar = cal;
+	
+	function readValues() {
+		
+		name        = document.getElementById('name-input').value;
+		location    = document.getElementById('location-input').value;
+		begin       = document.getElementById('begin-input').value;
+		end         = document.getElementById('end-input').value;
+		description = document.getElementById('description-input').value;
+		
+	}
+	
+	function deleteEvent() {
+		
+		$.ajax({
+			url: '/'+id,
+			type: 'DELETE',
+			success: function(result) {
+				alert(result.message);
 			}
 		});
+		
+	}
+	
+	function updateEvent() {
+		
+		$.ajax({
+			url: '/'+id,
+			type: 'PUT',
+			headers: {
+				name: name,
+				begin: begin,
+				end: end,
+				location: location,
+				description: description
+			},
+			success: function(result) {
+				alert(result.message);
+			}
+		});
+		
 	}
 	
 	// builds the edit event page
 	// TODO: pre-fill input fields
-	this.buildEditEventPage = function(id) {
+	this.buildEditEventPage = function() {
 		$('.page-content').load("edit_event_template.html");
 		
-		//var eventDetails = getEventDetails(id);
+		$(document).on('click', "#cancel-button", function(event) {
+			orig_calendar.buildCalendar();
+		});
+		
+		$(document).on('click', "#delete-button", function(event) {
+			deleteEvent();
+		});
+		
+		$(document).on('click', "#save-button", function(event) {
+			readValues();
+			updateEvent();
+		});
 		
 	}
 	
 }
 
-// builds the create event page
-function buildCreateEventPage() {
-	$('.page-content').load("new_event_template.html");
+function createEventUtil(cal) {
 	
-	$(document).on('click', "#cancel-button", function(event) {
-		calendarBegin();
-	});
+	var name        = "";
+	var location    = "";
+	var begin       = "";
+	var end         = "";
+	var description = "";
+	var orig_calendar = cal;
+	
+	function readValues() {
+		
+		name        = document.getElementById('name-input').value;
+		location    = document.getElementById('location-input').value;
+		begin       = document.getElementById('begin-input').value;
+		end         = document.getElementById('end-input').value;
+		description = document.getElementById('description-input').value;
+		
+	}
+	
+	function createEvent() {
+		
+		$.ajax({
+			url: '/',
+			type: 'post',
+			headers: {
+				name: name,
+				begin: begin,
+				end: end,
+				location: location,
+				description: description
+			},
+			dataType: 'json',
+			success: function (data) {
+				alert(data.message);
+				orig_calendar.buildCalendar();
+			}
+		});
+		
+	}
+	
+	// builds the create event page
+	this.buildCreateEventPage = function() {
+		
+		$('.page-content').load("new_event_template.html");
+		
+		$(document).on('click', "#create-event-button", function(event) {
+			readValues();
+			createEvent();
+		});
+		
+		$(document).on('click', "#cancel-button", function(event) {
+			orig_calendar.buildCalendar();
+		});
+		
+		
+		
+	}
+	
 }
 
 function calendarBegin() {
 	
 	var calendar = new calendarUtil();
+	
 	calendar.buildCalendar();
 	
 	
 	$(document).on('click', "#new-event-button", function(event) {
-		buildCreateEventPage();
+		var new_event = new createEventUtil(calendar);
+		
+		new_event.buildCreateEventPage();
 	});
 	
 	$(document).on('click', ".event-link", function(event) {
-		var eventpage = new editEventUtil();
+		var eventpage = new editEventUtil(calendar, event.target.id);
 		eventpage.buildEditEventPage();
 	});
 	

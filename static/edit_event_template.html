@@ -11,18 +11,10 @@
 			<li><div class="input-description">Event location</div><input  type="text" name="location" id="location-input"></li>
 			<li><div class="input-description">Begin time</div><input  type="text" name="begin" id="begin-input"></li>
 			<li><div class="input-description">End time</div><input  type="text" name="end" id="end-input"></li>
-			<li><div class="input-description">Event description</div><textarea></textarea></li>
+			<li><div class="input-description">Event description</div><textarea name="description" id="description-input"></textarea></li>
 		</ul>
-		<button class="btn btn-default home-button" style="margin-right: 50px;">Save changes</button>
-		<button class="btn btn-danger home-button" style="margin-right: 50px;">Delete event</button>
+		<button class="btn btn-default home-button" style="margin-right: 50px;" id="save-button">Save changes</button>
+		<button class="btn btn-danger home-button" style="margin-right: 50px;" id="delete-button">Delete event</button>
 		<button class="btn btn-default home-button" style="margin-right: 50px;" id="cancel-button">Cancel</button>
 	</div> <!-- container -->
 </div> <!-- event-details -->
-
-<script>
-	$(document).ready(function(){
-		$('#cancel-button').click(function(){
-			calendarBegin();
-		});
-	});
-</script>
