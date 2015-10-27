@@ -59,7 +59,7 @@ function calendarUtil()
 		
 		var currentDate = getDate(data.begin);
 		
-		if (data.begin != previousDate){
+		if (currentDate != getDate(previousDate)){
 			html += '</ul>';
 			html += renderDayDivider(currentDate);
 			html += '<ul class="event-list">';
@@ -323,6 +323,7 @@ function calendarBegin() {
 
 
 $(document).ready(function(){
+	
 	
 	calendarBegin();
 	

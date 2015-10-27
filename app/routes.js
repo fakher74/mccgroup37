@@ -74,7 +74,7 @@ module.exports = function(app, passport) {
 		else
 			beginquery = {begin: { "$lt": new Date(end) }};
 		if (typeof begin == 'undefined')
-			endquery = {};
+			endquery = {end: { "$gt": new Date() }};
 		else
 			endquery = {end: { "$gt": new Date(begin) }};
 		if (typeof location == 'undefined')
@@ -251,6 +251,7 @@ module.exports = function(app, passport) {
 	}); // app.put(/:event_id, ...)
 	
 }; // module.exports( ...
+
 
 function getUsername(req) {
 	var username = req.user.local.username;
