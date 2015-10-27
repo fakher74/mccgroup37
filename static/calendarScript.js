@@ -114,7 +114,9 @@ function calendarUtil()
 		$.get("/?"+queryString, function(data, status){
 			
 			if(status=="success"){	
-				alert(data.length);
+				events=data;
+				sortEvents();
+				renderCalendar();
 			}else{
 				//TODO
 			}
