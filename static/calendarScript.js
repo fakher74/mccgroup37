@@ -20,9 +20,26 @@ function getTime(datestring) {
 	return time;
 }
 
+// for sorting
+function compareEvents(a,b){
+	
+	if (a.begin < b.begin)
+		return -1;
+	if (a.begin > b.begin)
+		return 1;
+	return 0;
+	
+}
 
 function calendarUtil()
 {
+	
+	var events = [];
+	
+	function sortEvents(){
+		events.sort(compareEvents);
+	}
+	
 	// return day divider element with a date specified in the datestring
 	function renderDayDivider(datestring){
 		
@@ -42,7 +59,7 @@ function calendarUtil()
 		
 		var currentDate = getDate(data.begin);
 		
-		if (currentDate != previousDate){
+		if (data.begin != previousDate){
 			html += '</ul>';
 			html += renderDayDivider(currentDate);
 			html += '<ul class="event-list">';
@@ -57,6 +74,26 @@ function calendarUtil()
 		return html;
 	}
 	
+	// renders the calendar
+	function renderCalendar() {
+		
+		var html = '<ul class="event-list">';
+				
+		var previousDate = '';
+		
+		// loop throug the events and add them to the html string
+		for(var i=0; i<events.length; i++){
+			html += renderEvent(events[i], previousDate);
+			previousDate = events[i].begin;
+		}
+		
+		html += "</ul>";
+		
+		// add the html string to the page
+		$('.dynamic-content').html(html);
+		
+	}
+	
 	// builds the calendar page
 	// TODO: print out the events in chronological order
 	this.buildCalendar = function() {
@@ -69,20 +106,12 @@ function calendarUtil()
 			
 			if(status=="success"){
 				
-				var html = '<ul class="event-list">';
+				events = data;
 				
-				var previousDate = '';
+				sortEvents();
 				
-				// loop throug the events and add them to the html string
-				for(var i=0; i<data.length; i++){
-					html += renderEvent(data[i], previousDate);
-					previousDate = data[i].begin;
-				}
+				renderCalendar();
 				
-				html += "</ul>";
-				
-				// add the html string to the page
-				$('.dynamic-content').html(html);
 				
 			} else {
 				// TODO: do something useful
