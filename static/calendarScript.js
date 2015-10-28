@@ -141,7 +141,7 @@ function calendarUtil()
 			var month = now.getMonth()+1;
 			var day = now.getDate();
 			var query = "begin="+year+'-'+month+'-'+day;
-			$.get('/?'+query, function(data, status){
+			$.get('/?', function(data, status){
 				if(status=="success"){
 					
 					events = data;
@@ -156,9 +156,12 @@ function calendarUtil()
 		}
 		
 		$(document).off('click', "#search-button").on('click', "#search-button", function() {
-			
 			searchEvents();
-			
+		});
+		
+		
+		$(document).off('click', "#toggle-query-button").on('click', "#toggle-query-button", function(event) {
+			$("#query-form").slideToggle(200);
 		});
 	}
 	
@@ -344,10 +347,7 @@ function calendarBegin() {
 	
 	
 	$(document).off('click', "#new-event-button").on('click', "#new-event-button", function(event) {
-		
-		
 		var new_event = new createEventUtil(calendar);
-		
 		new_event.buildCreateEventPage();
 	});
 	
@@ -356,9 +356,6 @@ function calendarBegin() {
 		eventpage.buildEditEventPage();
 	});
 	
-	$(document).off('click', "#toggle-query-button").on('click', "#toggle-query-button", function(event) {
-		$("#query-form").slideToggle(200);
-	});
 }
 
 
