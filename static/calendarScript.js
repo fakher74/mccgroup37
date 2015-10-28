@@ -221,25 +221,54 @@ function editEventUtil(cal, eventid) {
 		
 	}
 	
+	
 	// builds the edit event page
 	// TODO: pre-fill input fields
 	this.buildEditEventPage = function() {
-		$('.page-content').empty();
 		
-		$('.page-content').load("edit_event_template.html");
-		
-		$(document).off('click', "#cancel-button").on('click', "#cancel-button", function(event) {
-			orig_calendar.buildCalendar();
-		});
-		
-		$(document).off('click', "#delete-button").on('click', "#delete-button", function(event) {
-			deleteEvent();
-		});
-		
-		$(document).off('click', "#save-button").on('click', "#save-button", function(event) {
+		$.get("/"+id, function(data, status){
 			
-			updateEvent();
+			if(status=="success"){	
+				name = data.name;
+				location = data.location;
+				begin = data.begin;
+				end = data.end;
+				description = data.description;
+				
+				$('.page-content').empty();
+				
+				$('.page-content').load("edit_event_template.html", function(){
+					
+					$('#name-input').val(name);
+					$('#location-input').val(location);
+					$('#begin-input').val(begin);
+					$('#end-input').val(end);
+					$('#description-input').val(description);
+				});
+				
+				
+				$(document).off('click', "#cancel-button").on('click', "#cancel-button", function(event) {
+					orig_calendar.buildCalendar();
+				});
+				
+				$(document).off('click', "#delete-button").on('click', "#delete-button", function(event) {
+					deleteEvent();
+				});
+				
+				$(document).off('click', "#save-button").on('click', "#save-button", function(event) {
+					
+					updateEvent();
+				});
+				
+				
+			}else{
+				//TODO
+			}
 		});
+		
+		
+		
+		
 		
 	}
 	
