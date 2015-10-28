@@ -12,7 +12,7 @@
 			<ul class="event-query">
 				<li><div class="input-description">Event name</div><input placeholder="event name" id="name-input"></li>
 				<li><div class="input-description">Event location</div><input placeholder="event location" id="location-input"></li>
-				<li><div class="input-description">Begin time</div><input placeholder="begin time" id="begin-input"></li>
+				<li><div class="input-description">Begin time</div><input placeholder="begin time (default now)" id="begin-input"></li>
 				<li><div class="input-description">End time</div><input placeholder="end time" id="end-input"></li>
 			</ul>
 			<button class="btn btn-default home-button btn-sm" id="search-button">Search <span class="glyphicon glyphicon-search" aria-hidden="true" style="padding-left: 4px;"></span></button>
@@ -45,9 +45,6 @@
 
 <script>
 	$(document).ready(function(){
-		$(function() {
-			$( ".datepicker" ).datepicker();
-		});
 		$("#toggle-query-button").click(function(){
 			$("#query-form").slideToggle(200);
 		});

@@ -135,8 +135,12 @@ function calendarUtil()
 			renderCalendar();
 		} else {
 			// retrieve the event information
-			$.get("/", function(data, status){
-				
+			var now = new Date();
+			var year = now.getFullYear();
+			var month = now.getMonth()+1;
+			var day = now.getDate();
+			var query = "begin=2010-10-10T00:00:00.000Z";
+			$.get('/?'+query, function(data, status){
 				if(status=="success"){
 					
 					events = data;

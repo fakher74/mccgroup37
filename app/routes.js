@@ -80,7 +80,7 @@ module.exports = function(app, passport) {
 		else
 			beginquery = {begin: { "$lt": new Date(end) }};
 		if (typeof begin == 'undefined')
-			endquery = {end: { "$gt": new Date() }};
+			endquery = {};
 		else
 			endquery = {end: { "$gt": new Date(begin) }};
 		if (typeof location == 'undefined')
