@@ -136,17 +136,16 @@ function calendarUtil()
 		} else {
 			// retrieve the event information
 			var now = new Date();
+			
 			var year = now.getFullYear();
 			var month = now.getMonth()+1;
 			var day = now.getDate();
-			var query = "begin=2010-10-10T00:00:00.000Z";
+			var query = "begin="+year+'-'+month+'-'+day;
 			$.get('/?'+query, function(data, status){
 				if(status=="success"){
 					
 					events = data;
-					
 					sortEvents();
-					
 					renderCalendar();
 					
 					
