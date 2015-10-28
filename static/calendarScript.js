@@ -192,12 +192,14 @@ function editEventUtil(cal, eventid) {
 			type: 'DELETE',
 			success: function(result) {
 				alert(result.message);
+				orig_calendar.buildCalendar();
 			}
 		});
 		
 	}
 	
 	function updateEvent() {
+		readValues();
 		
 		$.ajax({
 			url: '/'+id,
@@ -210,7 +212,7 @@ function editEventUtil(cal, eventid) {
 				description: description
 			},
 			success: function(result) {
-				alert(result.message);
+				orig_calendar.buildCalendar();
 			}
 		});
 		
@@ -232,7 +234,7 @@ function editEventUtil(cal, eventid) {
 		});
 		
 		$(document).off('click', "#save-button").on('click', "#save-button", function(event) {
-			readValues();
+			
 			updateEvent();
 		});
 		
@@ -328,7 +330,6 @@ function calendarBegin() {
 
 
 $(document).ready(function(){
-	
 	
 	calendarBegin();
 	
