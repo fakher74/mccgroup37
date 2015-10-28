@@ -1,5 +1,3 @@
-//TODO: for some reason when pressing cancel button, renderCalendar gets called several times. This shoudl be fixed
-
 // return dd.mm.yyyy string from the database format datetime string
 function getDate(datestring) {
 	var dayIndex = datestring.indexOf('T')-2;
@@ -129,6 +127,7 @@ function calendarUtil()
 	// TODO: print out the events in chronological order
 	this.buildCalendar = function() {
 		
+		$('.page-content').empty();
 		// load the calendar template
 		$('.page-content').load("calendar_template.html");
 		
@@ -220,17 +219,19 @@ function editEventUtil(cal, eventid) {
 	// builds the edit event page
 	// TODO: pre-fill input fields
 	this.buildEditEventPage = function() {
+		$('.page-content').empty();
+		
 		$('.page-content').load("edit_event_template.html");
 		
-		$(document).on('click', "#cancel-button", function(event) {
+		$(document).off('click', "#cancel-button").on('click', "#cancel-button", function(event) {
 			orig_calendar.buildCalendar();
 		});
 		
-		$(document).on('click', "#delete-button", function(event) {
+		$(document).off('click', "#delete-button").on('click', "#delete-button", function(event) {
 			deleteEvent();
 		});
 		
-		$(document).on('click', "#save-button", function(event) {
+		$(document).off('click', "#save-button").on('click', "#save-button", function(event) {
 			readValues();
 			updateEvent();
 		});
@@ -281,19 +282,21 @@ function createEventUtil(cal) {
 	
 	// builds the create event page
 	this.buildCreateEventPage = function() {
-		
+		$('.page-content').empty();
 		$('.page-content').load("new_event_template.html");
 		
-		$(document).on('click', "#create-event-button", function(event) {
+		$(document).off('click', "#create-event-button").on('click', "#create-event-button", function(event) {
 			readValues();
 			createEvent();
 		});
 		
-		$(document).on('click', "#cancel-button", function(event) {
+		$(document).off('click', "#cancel-button").on('click', "#cancel-button", function(event) {
 			orig_calendar.buildCalendar();
 		});
 		
-		
+		$(document).off('click', "#toggle-query-button").on('click', "#toggle-query-button", function(event) {
+			$("#query-form").slideToggle(200);
+		});
 		
 	}
 	
@@ -306,13 +309,15 @@ function calendarBegin() {
 	calendar.buildCalendar();
 	
 	
-	$(document).on('click', "#new-event-button", function(event) {
+	$(document).off('click', "#new-event-button").on('click', "#new-event-button", function(event) {
+		
+		
 		var new_event = new createEventUtil(calendar);
 		
 		new_event.buildCreateEventPage();
 	});
 	
-	$(document).on('click', ".event-link", function(event) {
+	$(document).off('click', ".event-link").on('click', ".event-link", function(event) {
 		var eventpage = new editEventUtil(calendar, event.target.id);
 		eventpage.buildEditEventPage();
 	});

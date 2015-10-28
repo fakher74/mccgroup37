@@ -5,6 +5,8 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
 
+var path = require('path');
+
 var configDB = require('./config/database.js');
 
 mongoose.connect(configDB.url); // connect to our database
@@ -26,10 +28,10 @@ app.configure(function() {
 	app.use(passport.session()); // persistent login sessions
 	app.use(flash()); // use connect-flash for flash messages stored in session
 	
-	app.use(express.static('static'));
+	//app.use(express.static('static'));
+	app.use(express.static(__dirname + '/static'));
 
 });
-
 // routes
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 

@@ -16,7 +16,7 @@ module.exports = function(app, passport) {
 
 	// process the login form
 	app.post('/login', passport.authenticate('local-login', {
-		successRedirect : '/', // redirect to /
+		successRedirect : '/home', // redirect to /
 		failureRedirect : '/login', // redirect back to the login if there is an error
 		failureFlash : true // allow flash messages
 	}));
@@ -47,6 +47,12 @@ module.exports = function(app, passport) {
 		req.logout();
 		res.redirect('/');
 	});
+        
+        app.get('/home',isLoggedIn, function(req,res){
+               
+                 var static_dir = './static/';
+       		res.sendfile(static_dir + '/base.html');
+        }); 
 	
 	// =====================================
 	// REST ================================
