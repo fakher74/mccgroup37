@@ -155,7 +155,7 @@ function calendarUtil()
 			});
 		}
 		
-		$(document).on('click', "#search-button", function() {
+		$(document).off('click', "#search-button").on('click', "#search-button", function() {
 			
 			searchEvents();
 			
@@ -356,6 +356,9 @@ function calendarBegin() {
 		eventpage.buildEditEventPage();
 	});
 	
+	$(document).off('click', "#toggle-query-button").on('click', "#toggle-query-button", function(event) {
+		$("#query-form").slideToggle(200);
+	});
 }
 
 
